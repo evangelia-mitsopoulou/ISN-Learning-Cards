@@ -236,7 +236,7 @@ CourseModel.prototype.loadFromServer = function() {
 			
 			//download all the quesitons(questionlist) for each course
             var c;
-			for ( c in self.courseList) {
+			for (c in self.courseList) {
 				self.courseList[c].isLoaded = false;
 
 				self.controller.models["questionpool"]
