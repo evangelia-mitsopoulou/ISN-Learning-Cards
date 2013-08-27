@@ -63,7 +63,7 @@ function ConfigurationModel(controller) {
 	this.logoimage = "";
 	this.logolabel = "";
 		
-	// load data from the local storage if any
+	// load data fryom the local storage if any
 	this.loadData();
 	
 	
@@ -74,7 +74,7 @@ function ConfigurationModel(controller) {
 	* 
 	* FIXME:
 	* Take care that the session key and the server are stored with the pending information so we can send the data 
-	* with the correct context to the backend i.e. if you have pening information and you login to a different server
+	* with the correct context to the backend i.e. if you have pending information and you login to a different server
 	* then the pending information should be sent to the original server for the original user and not
 	* to the new server and the new user. 
 	*/
@@ -428,19 +428,21 @@ ConfigurationModel.prototype.sendAuthToServer = function(authData) {
  * Sends a delete request to the server in order to invalidates the specified session key 
  * or if no session key is specified the current session key.
  * We send via header the session key. After the delete request is sent to the server,
- * we clear the local storage. We keep only the app key.
 * @prototype
 * @function sendLogoutToServer
 * @param userAuthenticationKey
 */
 ConfigurationModel.prototype.sendLogoutToServer = function(userAuthenticationKey,featuredContent_id) {
 	moblerlog("enter send logout to server");
+
 	var sessionKey,self = this;
 	var activeURL = self.controller.getActiveURL();  
-	if (userAuthenticationKey) {
+	if (userAuthenticationKey) {  
 		sessionKey = userAuthenticationKey;
+		
 	} else {
 		sessionKey = self.configuration.userAuthenticationKey;
+		
 	}
 	
 	$
@@ -493,6 +495,8 @@ ConfigurationModel.prototype.sendLogoutToServer = function(userAuthenticationKey
 	//this.storeData();
 
 	// drop statistics data table from local database
+	// we pass the featured content id in order to excluded it from the deleted data
+	//the statistics of the featured content will stay in the local storage
 	this.controller.models['answers'].deleteDB(featuredContent_id);	
 };
 

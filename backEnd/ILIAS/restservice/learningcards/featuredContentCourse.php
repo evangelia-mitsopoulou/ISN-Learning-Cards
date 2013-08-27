@@ -60,10 +60,12 @@ global $DEBUG,$ilPluginAdmin;
 $DEBUG = 1;
 $class_for_logging = "featuredContentCourse.php";
 
+
 logging("is plugin active or not ".$ilPluginAdmin->isActive(IL_COMP_SERVICE, "UIComponent", "uihk", "TLAMoblerCards"));
 if ($ilPluginAdmin->isActive(IL_COMP_SERVICE, "UIComponent", "uihk", "TLAMoblerCards")) {
 
 // get the anonymous user id
+
 if ($GLOBALS['WEB_ACCESS_WITHOUT_SESSION']){
 	logging("web access without session");
 	$_SESSION["AccountId"] = ANONYMOUS_USER_ID;	
@@ -73,7 +75,8 @@ if ($GLOBALS['WEB_ACCESS_WITHOUT_SESSION']){
 };
 logging("anonymous user id is ".$userID);
 
-$return_data = getFeaturedContent($userID);	
+$return_data = getFeaturedContent($userID);	// we  pass as argument the userId, which we we got from above
+											
 header('content-type: application/json');
 echo (json_encode($return_data));
 } else {
